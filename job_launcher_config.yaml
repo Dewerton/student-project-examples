@@ -1,0 +1,14 @@
+jenkins_server: http://192.168.56.27
+builds:
+  - name: random_number_generator
+    parameters:
+      LIMIT: 10
+  - name: random_number_generator
+    parameters:
+      LIMIT: abc1000
+  - name: nonexistent_job
+    parameters:
+      LIMIT: 100
+  - name: random_number_generator
+    parameters:
+      LIMIT: 100
