@@ -33,8 +33,8 @@ class Reporter:
         for result in results:
             message.append(f'name: {result.get("name")}')
             message.append(f'status: {result.get("status")}')
-            message.append(f'timestamp: {result.get("result", {}).get("timestamp", "-")}')
-            message.append(f'number: {result.get("result", {}).get("number", "-")}')
+            message.append(f'timestamp: {result.get("result", {}).get("timestamp") or "-"}')
+            message.append(f'number: {result.get("result", {}).get("number") or "-"}')
             message.append('')
         return '\n'.join(message)
 
