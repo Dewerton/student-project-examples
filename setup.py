@@ -34,12 +34,12 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: Other/Proprietary License',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.6',
         'Operating System :: POSIX :: Linux'
     ],
     packages=find_packages(where='src', include=('job_launcher*',)),
     package_dir={'job_launcher': 'src/job_launcher'},
-    python_requires='>=3.8',
+    python_requires='>=3.6',
     install_requires=[
         'pyyaml>=5.3.1,<6',
         'jenkinsapi>=0.3.11,<0.4',

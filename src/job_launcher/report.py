@@ -5,7 +5,7 @@ from os import path
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 import job_launcher
-from job_launcher.api import InitialData
+from job_launcher.data import Arguments
 
 log = logging.getLogger(__name__)
 
@@ -13,9 +13,9 @@ log = logging.getLogger(__name__)
 class Reporter:
     TEMPLATES_DIR = 'resources/templates'
 
-    def __init__(self, data: InitialData):
-        self.json_report_file = path.join(data.args['output'], data.args['json_report'])
-        self.html_report_file = path.join(data.args['output'], data.args['html_report'])
+    def __init__(self, data: Arguments):
+        self.json_report_file = path.join(data.output, data.json_report)
+        self.html_report_file = path.join(data.output, data.html_report)
         environment = Environment(
             loader=PackageLoader(job_launcher.__name__, self.TEMPLATES_DIR),
             autoescape=select_autoescape(['html', 'xml']),

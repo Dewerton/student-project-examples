@@ -9,7 +9,7 @@ from jenkinsapi.custom_exceptions import UnknownJob
 from jenkinsapi.jenkins import Jenkins, JenkinsAPIException
 from requests import RequestException, HTTPError
 
-from job_launcher.exceptions import JenkinsServerException, JobLauncherApplicationException
+from job_launcher.exceptions import JobLauncherApplicationException, JenkinsServerException
 
 log = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class JenkinsServer:
     def __init__(self, url: str, username: Optional[str] = None, password: Optional[str] = None):
         self.server_url = url
         try:
-            self.server = Jenkins(self.server_url, username, password, useCrumb=True)
+            self.server = Jenkins(self.server_url, username, password, timeout=600, useCrumb=True, lazy=True)
         except (RequestException, JenkinsAPIException) as e:
             raise JobLauncherApplicationException(
                 f"Failed to connect to Jenkins '{self.server_url}' with user '{username}'. Error: {e.message}"

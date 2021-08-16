@@ -1,4 +1,4 @@
-jenkins_server: http://192.168.56.27
+jenkins_server: http://192.168.56.24:8080
 builds:
   - name: random_number_generator
     parameters:

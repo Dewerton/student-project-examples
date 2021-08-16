@@ -2,8 +2,7 @@ import json
 import logging
 from os import path
 
-from job_launcher.api import InitialData
-from job_launcher.data import LauncherConfig, BuildConfig
+from job_launcher.data import LauncherConfig, BuildConfig, Arguments
 from job_launcher.exceptions import JenkinsServerException
 from job_launcher.jenkins import JenkinsServer, JenkinsBuild
 
@@ -11,10 +10,10 @@ log = logging.getLogger(__name__)
 
 
 class JobLauncher:
-    def __init__(self, data: InitialData, config: LauncherConfig):
+    def __init__(self, args: Arguments, config: LauncherConfig):
         self.jenkins = JenkinsServer(config.server, config.user, config.password)
         self.builds = config.builds
-        self.result = JobLauncherResult(config.server, data)
+        self.result = JobLauncherResult(config.server, args)
 
     def run(self):
         log.info('Start job launcher')
@@ -40,9 +39,9 @@ class JobLauncher:
 class JobLauncherResult:
     BUILD_RESULT_ENV = 'BUILD_RESULT'
 
-    def __init__(self, server: str, data: InitialData):
+    def __init__(self, server: str, args: Arguments):
         self.server = server
-        self.result_file = path.join(data.args['output'], data.args['json_report'])
+        self.result_file = path.join(args.output, args.json_report)
         self.results = []
 
     def append(self, build: JenkinsBuild):
