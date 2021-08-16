@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import logging
 import time
 from typing import Optional, Dict
@@ -30,7 +28,7 @@ class JenkinsServer:
                 f"Failed to connect to Jenkins '{self.server_url}' with user '{username}'. Error: {e.message}"
             ) from e
 
-    def run_job(self, name: str, params: Dict[str, str]) -> JenkinsBuild:
+    def run_job(self, name: str, params: Dict[str, str]) -> 'JenkinsBuild':
         build = self._launch_build(name, params)
         self._wait(build)
         return JenkinsBuild.from_jenkins_api_build(build)
@@ -77,7 +75,7 @@ class JenkinsBuild:
         self.env = env
 
     @classmethod
-    def from_jenkins_api_build(cls, build: Build) -> JenkinsBuild:
+    def from_jenkins_api_build(cls, build: Build) -> 'JenkinsBuild':
         return cls(
             build.get_build_url(),
             build.get_status(),
