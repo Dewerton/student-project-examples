@@ -44,7 +44,7 @@ setup(
         'pyyaml>=5.3.1,<6',
         'jenkinsapi>=0.3.11,<0.4',
         'requests>=2.25.1,<3',
-        'jinja2>=2.11.3<3',
+        'jinja2==2.11.3',
     ],
     entry_points={
         'console_scripts': [
