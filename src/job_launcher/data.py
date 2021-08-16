@@ -23,7 +23,7 @@ def parse_arguments() -> 'Arguments':
     parser.add_argument('--version', action='version', version='%(prog)s {}'.format(version))
     parser.add_argument('--debug', action='store_true', help='Activate debug logging')
     parser.add_argument('-o', '--output', default='output', help='Output folder for reports')
-    subparsers = parser.add_subparsers(description='', dest='subparser', required=True)
+    subparsers = parser.add_subparsers(description='', dest='subparser')
 
     run_parser = subparsers.add_parser('run', help='run jobs')
     run_parser.add_argument('config', type=FileType('r'), help='a config file')
