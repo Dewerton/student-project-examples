@@ -13,17 +13,25 @@ log = logging.getLogger(job_launcher.__name__)
 def main():
     try:
         args = initialize()
-        if args.should_run():
+        if should_run(args):
             config = LauncherConfig.parse(args.config)
-            JobLauncher(args, config).run()
-        if args.should_generate_report():
-            Reporter(args).generate()
+            JobLauncher(args.output, config).run()
+        if should_generate_report(args):
+            Reporter(args.output).generate()
     except JobLauncherApplicationException as e:
         log.error(e)
         sys.exit(1)
     except Exception:
         log.exception('Fatal error occurs')
         sys.exit(2)
+
+
+def should_run(args):
+    return args.subparser == 'run'
+
+
+def should_generate_report(args):
+    return args.subparser == 'report' or (args.subparser == 'run' and args.report)
 
 
 if __name__ == '__main__':

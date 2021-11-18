@@ -1,17 +1,25 @@
 import json
 import logging
 from os import path
-
-from job_launcher.data import Arguments
+from typing import Dict
 
 log = logging.getLogger(__name__)
 
 
-class Reporter:
+JSON_REPORT = 'job_launcher_result.json'
 
-    def __init__(self, data: Arguments):
-        self.json_report_file = path.join(data.output, data.json_report)
-        self.html_report_file = path.join(data.output, data.html_report)
+
+def dump_json_report(data: Dict, output: str):
+    with open(path.join(output, JSON_REPORT), 'w') as f:
+        json.dump(data, f, indent=2)
+
+
+class Reporter:
+    HTML_REPORT = 'job_launcher_result.html'
+
+    def __init__(self, output: str):
+        self.json_report_file = path.join(output, JSON_REPORT)
+        self.html_report_file = path.join(output, self.HTML_REPORT)
 
     def generate(self):
         log.info('Start report generation')

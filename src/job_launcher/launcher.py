@@ -1,19 +1,19 @@
 import json
 import logging
-from os import path
 
-from job_launcher.data import LauncherConfig, BuildConfig, Arguments
+from job_launcher.data import LauncherConfig, BuildConfig
 from job_launcher.exceptions import JenkinsServerException
 from job_launcher.jenkins import JenkinsServer, JenkinsBuild
+from job_launcher.report import dump_json_report
 
 log = logging.getLogger(__name__)
 
 
 class JobLauncher:
-    def __init__(self, args: Arguments, config: LauncherConfig):
+    def __init__(self, output: str, config: LauncherConfig):
         self.jenkins = JenkinsServer(config.server, config.user, config.password)
         self.builds = config.builds
-        self.result = JobLauncherResult(config.server, args)
+        self.result = JobLauncherResult(config.server, output)
 
     def run(self):
         log.info('Start job launcher')
@@ -39,9 +39,9 @@ class JobLauncher:
 class JobLauncherResult:
     BUILD_RESULT_ENV = 'BUILD_RESULT'
 
-    def __init__(self, server: str, args: Arguments):
+    def __init__(self, server: str, output: str):
         self.server = server
-        self.result_file = path.join(args.output, args.json_report)
+        self.output = output
         self.results = []
 
     def append(self, build: JenkinsBuild):
@@ -57,11 +57,10 @@ class JobLauncherResult:
         })
 
     def dump(self):
-        with open(self.result_file, 'w') as f:
-            json.dump(
-                {
-                    'server': self.server,
-                    'results': self.results,
-                },
-                f, indent=2
-            )
+        dump_json_report(
+            {
+                'server': self.server,
+                'results': self.results,
+            },
+            self.output
+        )
