@@ -1,7 +1,7 @@
 import json
 import logging
 
-from job_launcher.data import LauncherConfig, BuildConfig
+from job_launcher.config import LauncherConfig, BuildConfig
 from job_launcher.exceptions import JenkinsServerException
 from job_launcher.jenkins import JenkinsServer, JenkinsBuild
 from job_launcher.report import dump_json_report
