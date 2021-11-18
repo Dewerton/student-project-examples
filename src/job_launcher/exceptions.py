@@ -1,9 +1,7 @@
 class JobLauncherApplicationException(Exception):
-    def __init__(self, message: str):
-        super().__init__(message)
+    pass
 
 
-class JenkinsServerException(Exception):
-    def __init__(self, message: str):
-        super().__init__(message)
+class JenkinsServerException(JobLauncherApplicationException):
+    pass
 
